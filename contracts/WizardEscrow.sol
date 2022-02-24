@@ -14,13 +14,6 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contr
  * @dev Base escrow contract, holds funds designated for a payee until they
  * withdraw them.
  *
- * Intended usage: This contract (and derived escrow contracts) should be a
- * standalone contract, that only interacts with the contract that instantiated
- * it. That way, it is guaranteed that all Ether will be handled according to
- * the `Escrow` rules, and there is no need to check for payable functions or
- * transfers in the inheritance tree. The contract that uses the escrow as its
- * payment method should be its owner, and provide public methods redirecting
- * to the escrow's deposit and withdraw.
  */
 
 abstract contract CosmicWizard is IERC721 {
@@ -54,8 +47,8 @@ contract WizardEscrow is ERC721, Ownable {
         return _burned[tokenId];
     }
 
+    //checks that user owns the NFT submitted
     function verifyOwnership(uint256 tokenId) internal view returns (bool) {
-        require(_exists(tokenId), "NFT does not exist");
         require(cosmic2D.balanceOf(msg.sender) > 0, "User does not own any NFTs");
         require(cosmic2D.ownerOf(tokenId) == msg.sender, "User does not own this NFT");
         return true;
@@ -67,6 +60,9 @@ contract WizardEscrow is ERC721, Ownable {
 
     /**
      * @dev Stores the NFT.
+     * This is where the magic happens
+     * Runs checks to make sure the transaction is valid before burning the NFT
+     * Adds the user to a list of people authorized to receive a new NFT
      * @param payee The destination address of the funds.
      */
     function deposit(address payee, uint256 tokenId) public payable virtual onlyOwner {
