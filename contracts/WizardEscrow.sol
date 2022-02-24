@@ -6,8 +6,9 @@ pragma solidity ^0.8.0;
 import "./Ownable.sol";
 import "./Address.sol";
 import "./ERC721.sol";
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721.sol";
+import "./IERC721.sol";
 
+import "hardhat/console.sol";
 
 /**
  * @title Escrow
@@ -36,6 +37,7 @@ contract WizardEscrow is ERC721, Ownable {
 
     constructor(address _contract) ERC721("WizardEscrow", "WIZESC") {
         cosmic2D = CosmicWizard(_contract);
+        console.log("Constructed the wiz escrow");
     }
 
     //returns false if the token is not a valid token
@@ -46,6 +48,11 @@ contract WizardEscrow is ERC721, Ownable {
     function checkBurned(uint256 tokenId) internal view returns (bool) {
         return _burned[tokenId];
     }
+
+    function sayAgain(string memory word) public view returns (string memory) {
+        return word;
+    }
+
 
     //checks that user owns the NFT submitted
     function verifyOwnership(uint256 tokenId) internal view returns (bool) {
