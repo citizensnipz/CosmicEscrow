@@ -1,6 +1,7 @@
-# Basic Sample Hardhat Project
+# Cosmic Wizard NFT Escrow
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This contract is designed for the purpose of allowing users to submit their Cosmic Wizard NFTs to be burned in return for a new
+3D Cosmic Wizard NFT. 
 
 Try running some of the following tasks:
 
