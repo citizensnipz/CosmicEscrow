@@ -26,3 +26,27 @@ describe("WizardEscrow", function () {
 
 
 });
+
+describe("CosmicWizard", function () {
+	it("Should be accessible", async function () {
+		const CosmicWizard = await ethers.getContractFactory("ComicWizard");
+		const cosmic = await CosmicWizard.deploy("Cosmic Wizards", "WIZARDS");
+		await cosmic.deployed();
+
+		expect(await cosmic.name()).to.equal("Cosmic Wizards");
+
+	});
+
+	it("Should mint an NFT to an address", async function () {
+		const CosmicWizard = await ethers.getContractFactory("ComicWizard");
+		const cosmic = await CosmicWizard.deploy("Cosmic Wizards", "WIZARDS");
+		await cosmic.deployed();
+
+		await cosmic.mintTokenId(1);
+
+		const owner = await cosmic.owner();
+
+		expect (await cosmic.ownerOf(1)).to.equal(owner);
+	})
+
+});

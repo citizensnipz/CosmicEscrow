@@ -22,6 +22,10 @@ abstract contract CosmicWizard is IERC721 {
 
 }
 
+abstract contract CosmicWizard3D is IERC721 {
+    function _exists(uint256) external virtual view returns (bool);
+}
+
 contract WizardEscrow is ERC721, Ownable {
     using Address for address payable;
 
@@ -33,11 +37,12 @@ contract WizardEscrow is ERC721, Ownable {
 
     CosmicWizard cosmic2D;
 
+    CosmicWizard3D cosmic3D;
+
 
 
     constructor(address _contract) ERC721("WizardEscrow", "WIZESC") {
         cosmic2D = CosmicWizard(_contract);
-        console.log("Constructed the wiz escrow");
     }
 
     //returns false if the token is not a valid token
@@ -61,8 +66,8 @@ contract WizardEscrow is ERC721, Ownable {
         return true;
     }
 
-    function depositsOf(address payee) public view returns (uint256) {
-        //return _deposits[payee];
+    function depositsOf(address payee) public view returns (uint256 [] memory) {
+        return _deposits[payee];
     }
 
     /**
@@ -97,4 +102,6 @@ contract WizardEscrow is ERC721, Ownable {
 
         //emit Withdrawn(payee, payment);
     }
+
+
 }
